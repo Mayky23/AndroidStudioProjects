@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_marginTop="185sp"
+            android:labelFor="@id/cajaTextoCorreo"
+            android:text="@string/Correo"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            tools:layout_gravity="center|center" />
+
+        <EditText
+            android:id="@+id/cajaTextoCorreo"
+            android:layout_width="256sp"
+            android:layout_height="48sp"
+            android:layout_gravity="center"
+            android:layout_margin="10sp"
+            android:background="@color/green2"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/textViewPass"
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_marginTop="15sp"
+            android:labelFor="@+id/cajaTextoPass"
+            android:text="@string/Contraseña"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/cajaTextoPass"
+            android:layout_width="256sp"
+            android:layout_height="48sp"
+            android:layout_gravity="center"
+            android:layout_margin="10sp"
+            android:background="@color/green2"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <Switch
+            android:id="@+id/Recuerdame"
+            android:layout_width="wrap_content"
+            android:layout_height="48sp"
+            android:layout_gravity="center"
+            android:layout_margin="5sp"
+            android:text="@string/texto_switch"
+            android:textColor="@color/white"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Button
+            android:id="@+id/buttonContinuar"
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15sp"
+            android:backgroundTint="@color/green2"
+            android:text="@string/boton_login" />
+
+        <TextView
+            android:id="@+id/resultText"
+            android:layout_width="match_parent"
+            android:layout_height="103sp"
+            android:layout_marginTop="15sp"
+            android:text="@string/contraseña_textView"
+            android:textAlignment="center"
+            android:textColor="@color/green"
+            android:textStyle="italic|bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

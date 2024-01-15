@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Practica5</string>
+    <string name="Correo">Correo</string>
+    <string name="Contraseña">Contraseña</string>
+    <string name="contraseña_textView"> </string>
+    <string name="texto_switch">Recuerdame</string>
+    <string name="boton_login">CONTINUAR</string>
+</resources>

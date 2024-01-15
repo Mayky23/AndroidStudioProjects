@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Practica5_2</string>
+    <string name="fabricante1">Boeing</string>
+    <string name="fabricante2">Airbus</string>
+    <string name="fabricante3">Cessna</string>
+    <string name="nombre1">Boeing 747</string>
+    <string name="nombre2">Airbus A380</string>
+    <string name="nombre3">Cessna 172</string>
+    <string name="nombre4">Boeing 787</string>
+    <string name="nombre5">Airbus A320</string>
+</resources>
