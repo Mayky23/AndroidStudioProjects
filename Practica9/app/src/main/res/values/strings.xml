@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Practica9</string>
+    <string name="buscar">BUSCAR</string>
+    <string name="Media">Video</string>
+    <string name="nombreMonumento">n monumento</string>
+    <string name="fecha">fecha</string>
+    <string name="descripcion">Descripción</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="latitud">1</string>
+    <string name="longitud">2</string>
+    <string name="PrecioEntrada">Precio Entrada: 50€</string>
+</resources>

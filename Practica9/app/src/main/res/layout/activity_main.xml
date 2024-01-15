@@ -1,0 +1,180 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azul2"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="90sp"
+        android:src="@drawable/portada"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15sp" />
+
+    <EditText
+        android:id="@+id/EditText_ID"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:hint="ID del monumento"
+        android:background="@drawable/edittext_background1"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/buttonBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/naranja"
+            android:text="@string/buscar"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginTop="10dp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20sp" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_background">
+
+            <TextView
+                android:id="@+id/textNombreMonumento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginTop="9dp"
+                android:text="@string/nombreMonumento"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-black"/>
+
+            <TextView
+                android:id="@+id/textFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/fecha"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-black"/>
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/imagenMonumento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/textDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/descripcion"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-black"/>
+
+
+            <TextView
+                android:id="@+id/textUbicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/ubicacion"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewLatitud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
+                    android:text="@string/latitud"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewLongitud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/longitud"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonCompra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="55dp"
+                android:layout_marginLeft="55sp"
+                android:text="@string/PrecioEntrada" />
+
+            <TextView
+                android:id="@+id/textMedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Media"
+                android:textSize="18sp"
+                android:padding="8sp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"/>
+
+            <WebView
+                android:id="@+id/viewVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="55sp"
+                android:layout_marginBottom="20sp" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
