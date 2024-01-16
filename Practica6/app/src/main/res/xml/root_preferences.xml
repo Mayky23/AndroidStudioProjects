@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/preferencias_usuario">
+
+        <EditTextPreference
+            app:key="User1"
+            app:title="@string/cabezera_usuario"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue=" "/>
+
+        <SwitchPreferenceCompat
+            app:key="session"
+            app:title="@string/sesion_init" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/titulo_comunicacion">
+
+        <SwitchPreferenceCompat
+            app:key="edit_communications"
+            app:title="@string/editar_comunicacion" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/titulo_interfaz">
+
+        <CheckBoxPreference
+            app:key="show_user"
+            app:title="@string/mostrar_usuario" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
