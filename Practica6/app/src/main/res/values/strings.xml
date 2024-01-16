@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Actividad6</string>
+    <string name="ajustes">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="cabezera_usuario">Usuario</string>
+    <string name="preferencias_usuario">Preferencias de usuario</string>
+    <string name="sesion_init">Mantener sesión iniciada</string>
+
+
+    <string name="titulo_comunicacion">Comunicaciones</string>
+    <string name="editar_comunicacion">Editar comunicaciones</string>
+
+
+    <string name="titulo_interfaz">Interfaz</string>
+    <string name="mostrar_usuario">Mostrar usuario</string>
+
+</resources>
