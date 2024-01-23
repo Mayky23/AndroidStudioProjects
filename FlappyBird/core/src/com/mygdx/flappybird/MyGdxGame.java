@@ -9,7 +9,11 @@ public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture background;
 	Texture flappyBird;
-	Texture [] birds;
+	Texture[] birds;
+	float birdY = 0;
+	float velocity = 0;
+	int gameState = 0;
+	int flapState = 0;
 
 	@Override
 	public void create() {
@@ -17,19 +21,46 @@ public class MyGdxGame extends ApplicationAdapter {
 		background = new Texture("background.png");
 		flappyBird = new Texture("flappybird.png");
 
-		int flapstate = 0;
+		flapState = 0;
 		birds = new Texture[2];
 		birds[0] = new Texture("flappybirdup.png");
 		birds[1] = new Texture("flappybirddown.png");
+
+		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2; // Corrected method name
 	}
 
 	@Override
 	public void render() {
+
+		if (gameState != 0) {
+			if (Gdx.input.justTouched()) {
+				velocity = -30;
+			}
+			if (birdY > 0 || velocity < 0) {
+				velocity += 2;
+				birdY -= velocity;
+			}
+		} else {
+			if (Gdx.input.justTouched()) {
+				gameState = 1;
+			}
+		}
+		if (flapState == 0) {
+			flapState = 1;
+		} else {
+			flapState = 0;
+		}
+
 		batch.begin();
-		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.draw(flappyBird,
-				Gdx.graphics.getWidth() / 2 - flappyBird.getWidth() / 2,
-				Gdx.graphics.getHeight() / 2 - flappyBird.getHeight() / 2);
+		batch.draw(background,
+				0,
+				0,
+				Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+
+		batch.draw(birds[flapState],
+				Gdx.graphics.getWidth() / 2 - birds[flapState].getWidth() / 2,
+				birdY);
 		batch.end();
 	}
 
