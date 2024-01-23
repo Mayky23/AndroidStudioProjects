@@ -14,6 +14,19 @@ public class MyGdxGame extends ApplicationAdapter {
 	float velocity = 0;
 	int gameState = 0;
 	int flapState = 0;
+	Texture topTube, bottonTube;
+	float gap = 500;
+	Random randomGenerator;
+	float tubeOffset;
+	int totalTubes = 10;
+	float [] tubeX = new float[totalTubes];
+	float distanceBetweenTubes;
+	birdCircle = new Circle();
+	MyGdxGame Gdx = new MyGdxGame();
+	shapeRender = new ShapeRenderer();
+	Rectangle [] topTubeRectangles;
+	Rectangle [] bottonTubeRectangles;
+
 
 	@Override
 	public void create() {
@@ -26,31 +39,42 @@ public class MyGdxGame extends ApplicationAdapter {
 		birds[0] = new Texture("flappybirdup.png");
 		birds[1] = new Texture("flappybirddown.png");
 
-		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2; // Corrected method name
+		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2;
+
+		topTube = new Texture("toptube.png");
+		bottonTube = new Texture("bottomtube.png");
+
+		randomGenerator = new Random();
+
+		distanceBetweenTubes = Gdx.graphics.getWidth() / 2;
+		for (int i = 0; i < totalTubes; i++){
+			tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f) * (Gdx.graphics.getHeight() - gap - 940);
+			tubeX[i] = Gdx.graphics.getWidth() / 2
+					- topTube.getWidth() / 2
+					+ Gdx.graphics.getWidth()
+					+ i
+					* distanceBetweenTubes;
+		}
+
+		topTubeRectangles = new Rectangle[totalTubes];
+		bottonTubeRectangles = new Rectangle[totalTubes];
+
+		for(int i = 0 ; i < totalTubes; i++){
+			tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f)
+					* (Gdx.ghaphics.getHeight() - gap - 950);
+			tubeX[i] = Gdx.ghaphics.getWidth() / 2
+					- topTube.getWidth() / 2
+					+ Gdx.ghaphics.getWidth()
+					+ i
+					* distanceBetweenTubes;
+
+			topTubeRectangles[i] = new Rectangle();
+			bottonTubeRectangles[i] = new Rectangle();
+		}
 	}
 
 	@Override
 	public void render() {
-
-		if (gameState != 0) {
-			if (Gdx.input.justTouched()) {
-				velocity = -30;
-			}
-			if (birdY > 0 || velocity < 0) {
-				velocity += 2;
-				birdY -= velocity;
-			}
-		} else {
-			if (Gdx.input.justTouched()) {
-				gameState = 1;
-			}
-		}
-		if (flapState == 0) {
-			flapState = 1;
-		} else {
-			flapState = 0;
-		}
-
 		batch.begin();
 		batch.draw(background,
 				0,
@@ -58,10 +82,85 @@ public class MyGdxGame extends ApplicationAdapter {
 				Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
+		if (gameState != 0) {
+			if (Gdx.input.justTouched()) {
+				velocity = -30;
+			}
+			for (int i = 0; i < totalTubes; i++){
+				if (tubeX[i] < - topTube.getWidth()){
+					tubeX[i] += totalTubes * distanceBetweenTubes;
+					tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f)
+							*(Gdx.ghaphics.getHeight() - gap - 940);
+				}
+				else{
+					tubeX[i] -= 4*2;
+				}
+
+				batch.draw(topTube,
+						tubeX[i],
+						Gdx.graphics.getHeight() / 2 + gap / 2 + tubeOffset[i]);
+
+				batch.draw(bottonTube,
+						tubeX[i],
+						Gdx.graphics.getHeight() / 2 - gap / 2 - bottonTube.getHeight() + tubeOffset[i]);
+
+				topTubeRectangles[i] = new Rectangle(
+						tubeX[i],
+						Gdx.ghaphics.getHeight() / 2 + gap / 2 + tubeOffset[i],
+						topTube.getWidth(),
+						topTube.getHeight());
+
+				bottonTubeRectangles[i] = new Rectangle(
+						tubeX[i],
+						Gdx.ghaphics.getHeight() / 2 - gap / 2 - bottonTube.getHeight() + tubeOffset[i],
+
+						bottonTube.getWidth(),
+						bottonTube.getHeight());
+
+			}
+
+			if (birdY > 0 || velocity < 0) {
+				velocity += 2;
+				birdY -= velocity;
+			}
+		}
+
+		else {
+			if (Gdx.input.justTouched()) {
+				gameState = 1;
+			}
+		}
+		if (flapState == 0) {
+			flapState = 1;
+		}
+		else {
+			flapState = 0;
+		}
+
 		batch.draw(birds[flapState],
-				Gdx.graphics.getWidth() / 2 - birds[flapState].getWidth() / 2,
+				Gdx.graphics.getWidth()/2 - birds[flapState].getWidth() / 2,
 				birdY);
+
 		batch.end();
+		birdCircle.set(
+				Gdx.ghaphics.getWidth() / 2,
+				birdY + birds[flapState].getHeight() / 2,
+				birds[flapState].getWidth() / 2);
+
+		shapeRenderer.begin(Shaperenderer.ShapeType.Filled);
+		shapeRenderer.setCollor(Color.BLUE);
+		shapeRenderer.circle(SbirdCircle.x, birdCircle.y, birdCircle.radius);
+
+		for(int i = 0; i < totalTubes; i++){
+			shapeRender.detect(
+					tubeX[i],
+					Gdx.ghaphics.getHeight() / 2 + gap / 2 + tubeOffset[i],
+					topTube.getWidth(),
+					topTube.getHeight());
+
+		}
+		shapeRenderer.end();
+
 	}
 
 	@Override
@@ -71,3 +170,5 @@ public class MyGdxGame extends ApplicationAdapter {
 		flappyBird.dispose();
 	}
 }
+
+// ME QUEDO POR EL PASO 15.3 DEL PDF
