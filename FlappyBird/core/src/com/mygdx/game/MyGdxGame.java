@@ -1,9 +1,15 @@
-package com.mygdx.flappybird;
+package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Color;
+import java.util.Random;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -14,26 +20,28 @@ public class MyGdxGame extends ApplicationAdapter {
 	float velocity = 0;
 	int gameState = 0;
 	int flapState = 0;
-	Texture topTube, bottonTube;
+	Texture topTube, bottomTube;
 	float gap = 500;
 	Random randomGenerator;
-	float tubeOffset;
 	int totalTubes = 10;
-	float [] tubeX = new float[totalTubes];
+	float[] tubeOffset = new float[totalTubes];
+
+	float[] tubeX = new float[totalTubes];
 	float distanceBetweenTubes;
-	birdCircle = new Circle();
-	MyGdxGame Gdx = new MyGdxGame();
-	shapeRender = new ShapeRenderer();
-	Rectangle [] topTubeRectangles;
-	Rectangle [] bottonTubeRectangles;
+	Circle birdCircle;
+	// ShapeRenderer shapeRenderer;
+	Rectangle[] topTubeRectangles;
+	Rectangle[] bottomTubeRectangles;
 	Texture gameOver;
+
+
+
 
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		background = new Texture("background.png");
-		gameOver = new Texture("gameover.png")
-		flappyBird = new Texture("flappybird.png");
+		gameOver = new Texture("gameover.png");
 
 		flapState = 0;
 		birds = new Texture[2];
@@ -43,9 +51,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2;
 
 		topTube = new Texture("toptube.png");
-		bottonTube = new Texture("bottomtube.png");
+		bottomTube = new Texture("bottomtube.png");
 
 		randomGenerator = new Random();
+
+		birdCircle = new Circle();
+		// shapeRenderer = new ShapeRenderer();
 
 		distanceBetweenTubes = Gdx.graphics.getWidth() / 2;
 		for (int i = 0; i < totalTubes; i++){
@@ -58,21 +69,22 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 
 		topTubeRectangles = new Rectangle[totalTubes];
-		bottonTubeRectangles = new Rectangle[totalTubes];
+		bottomTubeRectangles = new Rectangle[totalTubes];
 
 		for(int i = 0 ; i < totalTubes; i++){
 			tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f)
-					* (Gdx.ghaphics.getHeight() - gap - 950);
-			tubeX[i] = Gdx.ghaphics.getWidth() / 2
+					* (Gdx.graphics.getHeight() - gap - 950);
+			tubeX[i] = Gdx.graphics.getWidth() / 2
 					- topTube.getWidth() / 2
-					+ Gdx.ghaphics.getWidth()
+					+ Gdx.graphics.getWidth()
 					+ i
 					* distanceBetweenTubes;
 
 			topTubeRectangles[i] = new Rectangle();
-			bottonTubeRectangles[i] = new Rectangle();
+			bottomTubeRectangles[i] = new Rectangle();
+
 			if(Intersector.overlaps(birdCircle,topTubeRectangles[i])
-					|| Intersector.overlaps(birdCircle, bottonTubeRectangles[i])){
+					|| Intersector.overlaps(birdCircle, bottomTubeRectangles[i])){
 				gameState = 2;
 			}
 		}
@@ -82,7 +94,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2;
 
-		for (int i = 0; i < numberOfTubes; i++) {
+		for (int i = 0; i < totalTubes; i++) {
 
 			tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f)
 					* (Gdx.graphics.getHeight() - gap - 200);
@@ -109,7 +121,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
-		if (gameState == 0) {
+		if (gameState == 1) {
 			if (Gdx.input.justTouched()) {
 				velocity = -30;
 			}
@@ -117,7 +129,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				if (tubeX[i] < - topTube.getWidth()){
 					tubeX[i] += totalTubes * distanceBetweenTubes;
 					tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f)
-							*(Gdx.ghaphics.getHeight() - gap - 940);
+							*(Gdx.graphics.getHeight() - gap - 940);
 				}
 				else{
 					tubeX[i] -= 4*2;
@@ -127,25 +139,24 @@ public class MyGdxGame extends ApplicationAdapter {
 						tubeX[i],
 						Gdx.graphics.getHeight() / 2 + gap / 2 + tubeOffset[i]);
 
-				batch.draw(bottonTube,
+				batch.draw(bottomTube,
 						tubeX[i],
-						Gdx.graphics.getHeight() / 2 - gap / 2 - bottonTube.getHeight() + tubeOffset[i]);
+						Gdx.graphics.getHeight() / 2 - gap / 2 - bottomTube.getHeight() + tubeOffset[i]);
 
 				topTubeRectangles[i] = new Rectangle(
 						tubeX[i],
-						Gdx.ghaphics.getHeight() / 2 + gap / 2 + tubeOffset[i],
+						Gdx.graphics.getHeight() / 2 + gap / 2 + tubeOffset[i],
 						topTube.getWidth(),
 						topTube.getHeight());
 
-				bottonTubeRectangles[i] = new Rectangle(
+				bottomTubeRectangles[i] = new Rectangle(
 						tubeX[i],
-						Gdx.ghaphics.getHeight() / 2 - gap / 2 - bottonTube.getHeight() + tubeOffset[i],
+						Gdx.graphics.getHeight() / 2 - gap / 2 - bottomTube.getHeight() + tubeOffset[i],
 
-						bottonTube.getWidth(),
-						bottonTube.getHeight());
+						bottomTube.getWidth(),
+						bottomTube.getHeight());
 
 			}
-
 			if (birdY > 0 || velocity < 0) {
 				velocity += 2;
 				birdY -= velocity;
@@ -162,15 +173,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		else if (gameState == 2) {
 
-			batch.draw(gameover,
-					Gdx.graphics.getWidth() / 2 - gameover.getWidth() / 2,
+			batch.draw(gameOver,
+					Gdx.graphics.getWidth() / 2 - gameOver.getWidth() / 2,
 					Gdx.graphics.getHeight() / 2);
 
 			if (Gdx.input.justTouched()) {
 
 				gameState = 1;
 				velocity = 1;
-				startGame();
+				StartGame();
 			}
 		}
 
@@ -185,39 +196,46 @@ public class MyGdxGame extends ApplicationAdapter {
 				Gdx.graphics.getWidth()/2 - birds[flapState].getWidth() / 2,
 				birdY);
 
-		batch.end();
 		birdCircle.set(
-				Gdx.ghaphics.getWidth() / 2,
+				Gdx.graphics.getWidth() / 2,
 				birdY + birds[flapState].getHeight() / 2,
 				birds[flapState].getWidth() / 2);
 
-		shapeRenderer.begin(Shaperenderer.ShapeType.Filled);
-		shapeRenderer.setCollor(Color.BLUE);
-		shapeRenderer.circle(SbirdCircle.x, birdCircle.y, birdCircle.radius);
+
+		// shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		// shapeRenderer.setColor(Color.BLUE);
+		// shapeRenderer.circle(birdCircle.x, birdCircle.y, birdCircle.radius);
 
 		for(int i = 0; i < totalTubes; i++){
-			shapeRender.detect(
-					tubeX[i],
-					Gdx.ghaphics.getHeight() / 2 + gap / 2 + tubeOffset[i],
-					topTube.getWidth(),
-					topTube.getHeight());
 
-			shapeRender.detect(
-					tubeX[i],
-					Gdx.ghaphics.getHeight() / 2 -bottonTube.getHeight() + tubeOffset[i],
-					bottonTubeTube.getWidth(),
-					bottonTubeTube.getHeight());
+			//shapeRenderer.rect(
+			//		tubeX[i],
+			//		Gdx.graphics.getHeight() / 2 + gap / 2 + tubeOffset[i],
+			//		topTube.getWidth(),
+			//		topTube.getHeight());
+
+			// shapeRenderer.rect(
+			//		tubeX[i],
+			//		Gdx.graphics.getHeight() / 2 -bottomTube.getHeight() + tubeOffset[i],
+			//		bottomTube.getWidth(),
+			//		bottomTube.getHeight());
+
+			if(Intersector.overlaps(birdCircle, topTubeRectangles[i])
+				|| Intersector.overlaps(birdCircle,bottomTubeRectangles[i])){
+				gameState = 2;
+			}
+
 		}
-		shapeRenderer.end();
+		// shapeRenderer.end();
+
+		batch.end();
 
 	}
 
 	@Override
 	public void dispose() {
-		batch.dispose();
-		background.dispose();
-		flappyBird.dispose();
+		 batch.dispose();
+		 background.dispose();
+		 flappyBird.dispose();
 	}
 }
-
-// PUNTO 15.4 BORRAR COSAS RELACIONADAS CON SHAPE RENDER ..... QUE BORRO EXACTAMENTE?
