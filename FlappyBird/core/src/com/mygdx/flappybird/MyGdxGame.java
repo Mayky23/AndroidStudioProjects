@@ -26,12 +26,13 @@ public class MyGdxGame extends ApplicationAdapter {
 	shapeRender = new ShapeRenderer();
 	Rectangle [] topTubeRectangles;
 	Rectangle [] bottonTubeRectangles;
-
+	Texture gameOver;
 
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		background = new Texture("background.png");
+		gameOver = new Texture("gameover.png")
 		flappyBird = new Texture("flappybird.png");
 
 		flapState = 0;
@@ -70,7 +71,33 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			topTubeRectangles[i] = new Rectangle();
 			bottonTubeRectangles[i] = new Rectangle();
+			if(Intersector.overlaps(birdCircle,topTubeRectangles[i])
+					|| Intersector.overlaps(birdCircle, bottonTubeRectangles[i])){
+				gameState = 2;
+			}
 		}
+	}
+
+	public void StartGame() {
+
+		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2;
+
+		for (int i = 0; i < numberOfTubes; i++) {
+
+			tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f)
+					* (Gdx.graphics.getHeight() - gap - 200);
+
+			tubeX[i] = Gdx.graphics.getWidth() / 2
+					- topTube.getWidth() / 2
+					+ Gdx.graphics.getWidth()
+					+ i
+					* distanceBetweenTubes;
+
+			topTubeRectangles[i] = new Rectangle();
+			bottomTubeRectangles[i] = new Rectangle();
+
+		}
+
 	}
 
 	@Override
@@ -82,7 +109,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
-		if (gameState != 0) {
+		if (gameState == 0) {
 			if (Gdx.input.justTouched()) {
 				velocity = -30;
 			}
@@ -123,13 +150,30 @@ public class MyGdxGame extends ApplicationAdapter {
 				velocity += 2;
 				birdY -= velocity;
 			}
-		}
-
-		else {
-			if (Gdx.input.justTouched()) {
-				gameState = 1;
+			else{
+				gameState = 2;
 			}
 		}
+		else if (gameState == 0){
+			if (Gdx.input.justTouched()) {
+				gameState = 1;
+				StartGame();
+			}
+		}
+		else if (gameState == 2) {
+
+			batch.draw(gameover,
+					Gdx.graphics.getWidth() / 2 - gameover.getWidth() / 2,
+					Gdx.graphics.getHeight() / 2);
+
+			if (Gdx.input.justTouched()) {
+
+				gameState = 1;
+				velocity = 1;
+				startGame();
+			}
+		}
+
 		if (flapState == 0) {
 			flapState = 1;
 		}
@@ -158,6 +202,11 @@ public class MyGdxGame extends ApplicationAdapter {
 					topTube.getWidth(),
 					topTube.getHeight());
 
+			shapeRender.detect(
+					tubeX[i],
+					Gdx.ghaphics.getHeight() / 2 -bottonTube.getHeight() + tubeOffset[i],
+					bottonTubeTube.getWidth(),
+					bottonTubeTube.getHeight());
 		}
 		shapeRenderer.end();
 
@@ -171,4 +220,4 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 }
 
-// ME QUEDO POR EL PASO 15.3 DEL PDF
+// PUNTO 15.4 BORRAR COSAS RELACIONADAS CON SHAPE RENDER ..... QUE BORRO EXACTAMENTE?
